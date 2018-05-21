@@ -1,0 +1,41 @@
+<div class="container">
+  <h3 class="titleAdd">CATÁLOGO DE PELÍCULAS</h3>
+  <div class="card mt-3">
+    <div class="container">
+        <div class="table-responsive-sm">   
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-sm table-hover" style="text-align: center;">                
+                <thead class="thead-dark">
+                  <tr>            
+                    <th scope="col">Portada</th>
+                    <th scope="col">Título</th>
+                    <th scope="col">Genero</th>
+                    <th scope="col">Director</th>
+                    <th scope="col">Fecha Estreno</th>
+                    <th scope="col">Precio ($CO)</th>
+                    <th scope="col">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>                                   
+                  <tr *ngFor="let pelicula of peliculas" >  
+                      <td>
+                          <!--domSanitizar.bypassSecurityTrustUrl para urls amigables-->
+                          <img [src]="domSanitizar.bypassSecurityTrustUrl(pelicula.portada)"  width='220' height='320' alt="Sin Portada">
+                      </td>
+                      <td>{{pelicula.titulo | uppercase}}</td>
+                      <td>{{pelicula.genero}}</td>
+                      <td>{{pelicula.director}}</td>
+                      <td>{{pelicula.fechaEstreno  | date}}</td>
+                      <td>{{pelicula.precio | currency}}</td>
+                      <td>
+                          <div class="btn-group">
+                              <a [routerLink]="['/edit/', pelicula.id]"class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                              <a [routerLink]="['/delete/', pelicula.id]"class="btn btn-danger"><i class="far fa-trash-alt"></i></a>          
+                          </div>
+                      </td>
+                    </tr>
+                </tbody>      
+            </table>
+        </div>  
+    </div>
+  </div>
+</div>

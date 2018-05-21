@@ -1,0 +1,19 @@
+<div class="table-responsive-sm">   
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-sm table-hover" style="text-align: center;">
+      <!--datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" -->
+      <thead class="thead-dark">
+        <tr>            
+          <th scope="col">Portada</th>
+          <th scope="col">Título</th>
+          <th scope="col">Genero</th>
+          <th scope="col">Director</th>
+          <th scope="col">Fecha Estreno</th>
+          <th scope="col">Precio ($CO)</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>               
+          <app-pelicula *ngFor="let pelicula of peliculas" [pelicula]="pelicula"></app-pelicula>        
+      </tbody>      
+  </table>
+</div>
