@@ -1,7 +1,9 @@
 <nav class="navar navbar-expand navbar-dark bg-dark fixed-top">  
   <div class="container">
     <div class="collapse navbar-collapse">
-        <h3 class="navbar-brand">CRUD Películas</h3>      
+        <h3>
+          <a class="navbar-brand" [routerLink]="['/home']">CRUD Películas</a>          
+        </h3>      
         <ul class="navbar-nav ml-auto">
           <li routerLinkActive="active" class="nav-item" id="linkHome">
             <a  class="nav-link" [routerLink]="['/home']"><strong>Inicio</strong></a>            
