@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Pelicula } from '../../models/pelicula';
 import { Router } from '@angular/router';
 import { PeliculaService } from '../../services/pelicula.service';
+import { ToastrService } from 'ngx-toastr';//mensajes Toastr
 
 
 @Component({
@@ -16,7 +17,7 @@ export class AddComponent implements OnInit {
    tamanoPermitido: number = 500000;//500kb
    alertaTamanoPortada: boolean = false;
      
-  constructor(private router:Router, private peliculaService: PeliculaService)
+  constructor(private router:Router, private peliculaService: PeliculaService, private toastr: ToastrService)
   {  }
 
   ngOnInit(){
@@ -49,6 +50,14 @@ export class AddComponent implements OnInit {
     }
   }
 
+  showSuccess() {
+    this.toastr.success('Película Agregada!');
+  }
+
+  showError() {
+    this.toastr.error('Comuniquese con el administrador de la base de datos', 'Error!');
+  }
+
   addPelicula(formulario)
   { 
     
@@ -60,18 +69,23 @@ export class AddComponent implements OnInit {
       //console.log(peliculaFormulario);
       this.peliculaService.addPelicula(peliculaFormulario).subscribe(
         pelicula =>{ console.log(pelicula);
+                     this.showSuccess();
                      this.router.navigate(['/home']);
-        },error => console.log(<any>error));
+        },error => {console.log(<any>error)
+                    this.showError();
+        });
       
     }
     else{
       let peliculaFormulario = new Pelicula(1,formulario.titulo,formulario.genero,formulario.director, formulario.fechaEstreno, formulario.precio, formulario.sipnosis, this.fileImage.type, this.fileImage.name, this.urlUploadB64);
       //console.log(peliculaFormulario);
       this.peliculaService.addPelicula(peliculaFormulario).subscribe(
-        pelicula =>{ console.log(pelicula)
+        pelicula =>{ console.log(pelicula);
+                     this.showSuccess();
                      this.router.navigate(['/home']);
-        },error => console.log(<any>error));
-      
+        },error => {console.log(<any>error)
+                    this.showError();
+        });     
     }       
     
   }  

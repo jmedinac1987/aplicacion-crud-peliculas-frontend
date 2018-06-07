@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PeliculaService } from '../../services/pelicula.service';
 import { Pelicula } from '../../models/pelicula';
 import { DomSanitizer } from '@angular/platform-browser';//Para las url confiables 
+import { ToastrService } from 'ngx-toastr';//mensajes Toastr
 
 @Component({
   selector: 'app-delete',
@@ -16,7 +17,7 @@ export class DeleteComponent implements OnInit {
   urlUploadB64: string = "../assets/img/upload.png";  
   pelicula = new Pelicula(1, 'titulo', 'genero', 'director', 'fechaEstreno', 2, 'sipnosis', 'formato_portada', 'nombre_portada', 'portada');
   
-  constructor(private activatedRoute: ActivatedRoute, private peliculaService: PeliculaService, private domSanitizar: DomSanitizer, private router:Router) 
+  constructor(private activatedRoute: ActivatedRoute, private peliculaService: PeliculaService, private domSanitizar: DomSanitizer, private router:Router, private toastr: ToastrService) 
   { }
 
   ngOnInit() 
@@ -44,13 +45,24 @@ export class DeleteComponent implements OnInit {
       error =>  console.log(<any>error));
   }
 
+  showSuccess() {
+    this.toastr.success('Película Eliminada!');
+  }
+
+  showError() {
+    this.toastr.error('Comuniquese con el administrador de la base de datos', 'Error!');
+  }
+
   deletePelicula()
   { 
     if(confirm("Realmente desea eliminar la película?")){
       this.peliculaService.deletePelicula(this.pelicula.id).subscribe(
         pelicula => {console.log(pelicula);
+          this.showSuccess();
           this.router.navigate(['/home']);  
-        }, error => console.log(<any>error));                  
+        }, error =>{ console.log(<any>error)
+            this.showError();    
+        });                  
     }
   }  
 

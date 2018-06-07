@@ -2,7 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PeliculaService } from '../../services/pelicula.service';
 import { Pelicula } from '../../models/pelicula';
-import { DomSanitizer } from '@angular/platform-browser';//Para las url confiables 
+import { DomSanitizer } from '@angular/platform-browser';//Para las url confiables
+import { ToastrService } from 'ngx-toastr';//mensajes Toastr 
 
 @Component({
   selector: 'app-edit',
@@ -19,7 +20,7 @@ export class EditComponent implements OnInit, OnDestroy {
   tamanoPermitido: number = 500000;//500kb
   alertaTamanoPortada: boolean = true;
 
-  constructor(private activatedRoute: ActivatedRoute, private peliculaService: PeliculaService, private domSanitizar: DomSanitizer, private router:Router) 
+  constructor(private activatedRoute: ActivatedRoute, private peliculaService: PeliculaService, private domSanitizar: DomSanitizer, private router:Router, private toastr: ToastrService) 
   {     
 
   }
@@ -76,6 +77,14 @@ export class EditComponent implements OnInit, OnDestroy {
     }
   }
 
+  showSuccess() {
+    this.toastr.success('Película Editada!');
+  }
+
+  showError() {
+    this.toastr.error('Comuniquese con el administrador de la base de datos', 'Error!');
+  }
+
   editPelicula()
   { 
     //Se verifican los campos de la imagen 
@@ -93,8 +102,11 @@ export class EditComponent implements OnInit, OnDestroy {
     
     this.peliculaService.updatePelicula(this.pelicula).subscribe(
       pelicula  => {console.log(pelicula);
-      this.router.navigate(['/home']);  
-    },error =>  console.log(<any>error));
+                    this.showSuccess();
+                    this.router.navigate(['/home']);  
+    },error => { console.log(<any>error);
+                 this.showError();
+    });
     
     
   }
