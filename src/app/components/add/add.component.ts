@@ -21,7 +21,33 @@ export class AddComponent implements OnInit {
   {  }
 
   ngOnInit(){
+    this.validateInputPrecio();//Evita ingresar números negativos en el campo precio
+    window.scrollTo(0,0);  
+    const titulo = document.getElementById('titulo');
+    titulo.focus();
+  }
+
+  validateInputPrecio(){
     
+    const campoPrecio = document.getElementById('precio');
+    
+    campoPrecio.addEventListener('keydown', function(evento) {            
+      
+      let teclaPresionada = evento.key;      
+      let teclaPresionadaEsUnNumero = Number.isInteger(parseInt(teclaPresionada));
+      let sePresionoUnaTeclaAdmitida = teclaPresionada != ',' &&
+                                       teclaPresionada != 'Tab' &&         
+                                       teclaPresionada != 'ArrowUp' &&
+                                       teclaPresionada != 'ArrowLeft' &&
+                                       teclaPresionada != 'ArrowRight' &&
+                                       teclaPresionada != 'Backspace' &&
+                                       teclaPresionada != 'Delete' &&            
+                                       !teclaPresionadaEsUnNumero;      
+
+      if (sePresionoUnaTeclaAdmitida) {
+        evento.preventDefault();
+      }
+    });
   }
 
   handleFileInput(file: FileList) {

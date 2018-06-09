@@ -1,143 +1,147 @@
 <div style="padding-top: 50px; color: white">
     <h3 class="display-4" style="text-align: center;"><strong> BORRAR PELÍCULA</strong></h3>          
 </div>
-<div class="row justify-content-center">      
-    <div class="col-md-auto">
-    <div class="card-body">          
-        <form novalidate class="form-control" (ngSubmit)="deletePelicula();"  #FormPelicula="ngForm" enctype="multipart/form-data" >
-          <div class="form-group">
-              <img class="rounded mx-auto d-block" [src]="domSanitizar.bypassSecurityTrustUrl(urlUploadB64)"  
-                  width="220" 
-                  height="320"                                         
-                  > 
-          </div>            
-          <div class="form-group">
-            
-              <div class="custom-file">
-                  <!--LLama la funcion handleFileInput() para ajustar el archivo previsulizado en la etiqueta img superior línea 9-->                
-                  <input type="file" accept="image/*" (change)="handleFileInput($event.target.files)" name="portada" class="custom-file-input" id="customFile" disabled>
-                  <label class="custom-file-label" for="customFile">Ancho: 220px * Alto: 320px</label>
-              </div>                   
-            </div>
-            
-            <div class="form-group">
-              <input 
-                type="text"
-                class="form-control"                
-                placeholder="Título de la Película"
-                name="titulo"                                   
-                ngModel
-                #titulo="ngModel"
-                required minlength="2"
-                [(ngModel)]="pelicula.titulo"
-                disabled
-                >
-                <div *ngIf="titulo.errors?.required && titulo.touched" class="alert alert-warning" role="alert">
-                  <i class="fas fa-exclamation-triangle"></i> El título es requerido
+<div class="container">      
+    <div class="row">
+      <div class="col-md-7" style="margin: auto;">          
+        <div class="card">
+          <div class="card-body">
+            <form novalidate class="form-control" (ngSubmit)="deletePelicula();"  #FormPelicula="ngForm" enctype="multipart/form-data" >
+              <div class="form-group">
+                  <img class="rounded mx-auto d-block" [src]="domSanitizar.bypassSecurityTrustUrl(urlUploadB64)"  
+                      width="220" 
+                      height="320"                                         
+                      > 
+              </div>            
+              <div class="form-group">
+                
+                  <div class="custom-file">
+                      <!--LLama la funcion handleFileInput() para ajustar el archivo previsulizado en la etiqueta img superior línea 9-->                
+                      <input type="file" accept="image/*" (change)="handleFileInput($event.target.files)" name="portada" class="custom-file-input" id="customFile" disabled>
+                      <label class="custom-file-label" for="customFile">Ancho: 220px * Alto: 320px</label>
+                  </div>                   
                 </div>
-                <div *ngIf="titulo.errors?.minlength && titulo.touched" class="alert alert-warning" role="alert">
-                  <i class="fas fa-exclamation-triangle"></i> Es necesesario mínimo 2 caracteres para el título
+                
+                <div class="form-group">
+                  <input 
+                    type="text"
+                    class="form-control"                
+                    placeholder="Título de la Película"
+                    name="titulo"                                   
+                    ngModel
+                    #titulo="ngModel"
+                    required minlength="2"
+                    [(ngModel)]="pelicula.titulo"
+                    disabled
+                    >
+                    <div *ngIf="titulo.errors?.required && titulo.touched" class="alert alert-warning" role="alert">
+                      <i class="fas fa-exclamation-triangle"></i> El título es requerido
+                    </div>
+                    <div *ngIf="titulo.errors?.minlength && titulo.touched" class="alert alert-warning" role="alert">
+                      <i class="fas fa-exclamation-triangle"></i> Es necesesario mínimo 2 caracteres para el título
+                    </div>
+                </div>              
+                <div class="form-group">
+                    <input 
+                      type="text"
+                      class="form-control"                
+                      placeholder="Genero"
+                      name="genero"                    
+                      ngModel
+                      #genero="ngModel"
+                      required minlength="3"
+                      [(ngModel)]="pelicula.genero"
+                      disabled
+                      >
+                      <div *ngIf="genero.errors?.required && genero.touched" class="alert alert-warning" role="alert">
+                        <i class="fas fa-exclamation-triangle"></i> El genero de la película es requerido
+                      </div>
+                      <div *ngIf="genero.errors?.minlength && genero.touched" class="alert alert-warning" role="alert">
+                        <i class="fas fa-exclamation-triangle"></i> Es necesesario mínimo 3 caracteres para el establecer el genero
+                      </div>
                 </div>
-            </div>              
-            <div class="form-group">
-                <input 
-                  type="text"
-                  class="form-control"                
-                  placeholder="Genero"
-                  name="genero"                    
-                  ngModel
-                  #genero="ngModel"
-                  required minlength="3"
-                  [(ngModel)]="pelicula.genero"
-                  disabled
-                  >
-                  <div *ngIf="genero.errors?.required && genero.touched" class="alert alert-warning" role="alert">
-                    <i class="fas fa-exclamation-triangle"></i> El genero de la película es requerido
+                <div class="form-group">
+                  <input 
+                    type="text"
+                    class="form-control"                
+                    placeholder="Director"
+                    name="director"
+                    ngModel
+                    #director="ngModel"
+                    required minlength="3"
+                    [(ngModel)]="pelicula.director"
+                    disabled
+                    >
+                    <div *ngIf="director.errors?.required && director.touched" class="alert alert-warning" role="alert">
+                      <i class="fas fa-exclamation-triangle"></i> El director de la película es requerido
+                    </div>
+                    <div *ngIf="director.errors?.minlength && director.touched" class="alert alert-warning" role="alert">
+                      <i class="fas fa-exclamation-triangle"></i> Es necesesario mínimo 3 caracteres para el establecer nombre del director
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input 
+                      type="date"
+                      class="form-control"                
+                      placeholder="Fecha Estreno"
+                      name="fechaEstreno"
+                      ngModel
+                      #fechaEstreno="ngModel"
+                      required                    
+                      [(ngModel)]="pelicula.fechaEstreno"
+                      disabled
+                      >
+                      <div *ngIf="fechaEstreno.errors?.required && fechaEstreno.touched" class="alert alert-warning" role="alert">
+                        <i class="fas fa-exclamation-triangle"></i> La Fecha de Estreno es requerida
+                      </div>                    
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                    </div>
+                    <input 
+                      type="number"
+                      class="form-control"                  
+                      placeholder="Precio al Público"
+                      name="precio"                    
+                      ngModel
+                      #precio="ngModel"
+                      id="precio"
+                      required
+                      [(ngModel)]="pelicula.precio"
+                      disabled
+                      >
+                      <div *ngIf="precio.errors?.required && precio.touched" class="alert alert-warning" role="alert">
+                        <i class="fas fa-exclamation-triangle"></i> El precio al público es requerido
+                      </div>                    
                   </div>
-                  <div *ngIf="genero.errors?.minlength && genero.touched" class="alert alert-warning" role="alert">
-                    <i class="fas fa-exclamation-triangle"></i> Es necesesario mínimo 3 caracteres para el establecer el genero
+                </div>
+                <div class="form-group">
+                  <label for="sipnosis">Sipnosis: </label>  
+                  <textarea class="form-control"
+                    rows="3"
+                    name="sipnosis"
+                    ngModel
+                    #sipnosis="ngModel"
+                    required
+                    [(ngModel)]="pelicula.sipnosis"
+                    disabled
+                    >                 
+                  </textarea>
+                  <div *ngIf="sipnosis.errors?.required && sipnosis.touched" class="alert alert-warning" role="alert">
+                    <i class="fas fa-exclamation-triangle"></i> Es necesario una sipnosis de la película
                   </div>
-            </div>
-            <div class="form-group">
-              <input 
-                type="text"
-                class="form-control"                
-                placeholder="Director"
-                name="director"
-                ngModel
-                #director="ngModel"
-                required minlength="3"
-                [(ngModel)]="pelicula.director"
-                disabled
-                >
-                <div *ngIf="director.errors?.required && director.touched" class="alert alert-warning" role="alert">
-                  <i class="fas fa-exclamation-triangle"></i> El director de la película es requerido
+                </div>    
+                <div class="form-group">
+                  <button class="btn btn-danger mt-1 ml-1 mb-1" type="submit" name="delete">
+                      <i class="fas fas fa-times"></i> Borrar
+                  </button>                              
+                  <a class="btn btn-secondary mt-1 ml-1 mb-1" [routerLink]="['/home']"><i class="fas fa-ban"></i> Cancelar</a>                                   
                 </div>
-                <div *ngIf="director.errors?.minlength && director.touched" class="alert alert-warning" role="alert">
-                  <i class="fas fa-exclamation-triangle"></i> Es necesesario mínimo 3 caracteres para el establecer nombre del director
-                </div>
-            </div>
-            <div class="form-group">
-                <input 
-                  type="date"
-                  class="form-control"                
-                  placeholder="Fecha Estreno"
-                  name="fechaEstreno"
-                  ngModel
-                  #fechaEstreno="ngModel"
-                  required                    
-                  [(ngModel)]="pelicula.fechaEstreno"
-                  disabled
-                  >
-                  <div *ngIf="fechaEstreno.errors?.required && fechaEstreno.touched" class="alert alert-warning" role="alert">
-                    <i class="fas fa-exclamation-triangle"></i> La Fecha de Estreno es requerida
-                  </div>                    
-            </div>
-            <div class="form-group">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">$</span>
-                </div>
-                <input 
-                  type="number"
-                  class="form-control"                  
-                  placeholder="Precio al Público"
-                  name="precio"                    
-                  ngModel
-                  #precio="ngModel"
-                  id="precio"
-                  required
-                  [(ngModel)]="pelicula.precio"
-                  disabled
-                  >
-                  <div *ngIf="precio.errors?.required && precio.touched" class="alert alert-warning" role="alert">
-                    <i class="fas fa-exclamation-triangle"></i> El precio al público es requerido
-                  </div>                    
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="sipnosis">Sipnosis: </label>  
-              <textarea class="form-control"
-                rows="3"
-                name="sipnosis"
-                ngModel
-                #sipnosis="ngModel"
-                required
-                [(ngModel)]="pelicula.sipnosis"
-                disabled
-                >                 
-              </textarea>
-              <div *ngIf="sipnosis.errors?.required && sipnosis.touched" class="alert alert-warning" role="alert">
-                <i class="fas fa-exclamation-triangle"></i> Es necesario una sipnosis de la película
-              </div>
-            </div>    
-            <div class="form-group">
-              <button class="btn btn-danger mt-1 ml-1 mb-1" type="submit" name="delete">
-                  <i class="fas fas fa-times"></i> Borrar
-              </button>                              
-              <a class="btn btn-secondary mt-1 ml-1 mb-1" [routerLink]="['/home']"><i class="fas fa-ban"></i> Cancelar</a>                                   
-            </div>
-          </form>
+              </form>
+          </div>
+        </div>
     </div>
   </div>
 </div>

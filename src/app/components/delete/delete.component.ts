@@ -22,6 +22,8 @@ export class DeleteComponent implements OnInit {
 
   ngOnInit() 
   {
+    window.scrollTo(0,0); 
+
     //Obtengo el id desde la url
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
 

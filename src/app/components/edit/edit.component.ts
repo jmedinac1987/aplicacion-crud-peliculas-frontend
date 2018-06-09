@@ -27,6 +27,8 @@ export class EditComponent implements OnInit, OnDestroy {
 
   ngOnInit() 
   {
+    window.scrollTo(0,0); 
+    
     //Obtengo el id desde la url
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
 
@@ -42,12 +44,38 @@ export class EditComponent implements OnInit, OnDestroy {
        this.pelicula.sipnosis = data['sipnosis'];
        this.pelicula.formato_portada = data['formato_portada'];
        this.pelicula.nombre_portada = data['nombre_portada'];
-       this.pelicula.portada = data['portada'];
-       
+       this.pelicula.portada = data['portada'];       
+
        if(this.pelicula.portada != "")
          this.urlUploadB64 = this.pelicula.portada;
       },
-      error =>  console.log(<any>error));
+      error =>  console.log(<any>error));      
+      
+      this.validateInputPrecio();//Evita ingresar números negativos en el campo precio 
+
+  }
+
+  validateInputPrecio(){
+    
+    const campoPrecio = document.getElementById('precio');
+    
+    campoPrecio.addEventListener('keydown', function(evento) {            
+      
+      let teclaPresionada = evento.key;      
+      let teclaPresionadaEsUnNumero = Number.isInteger(parseInt(teclaPresionada));
+      let sePresionoUnaTeclaAdmitida = teclaPresionada != ',' &&
+                                       teclaPresionada != 'Tab' &&         
+                                       teclaPresionada != 'ArrowUp' &&
+                                       teclaPresionada != 'ArrowLeft' &&
+                                       teclaPresionada != 'ArrowRight' &&
+                                       teclaPresionada != 'Backspace' &&
+                                       teclaPresionada != 'Delete' &&            
+                                       !teclaPresionadaEsUnNumero;      
+
+      if (sePresionoUnaTeclaAdmitida) {
+        evento.preventDefault();
+      }
+    });
   }
 
   handleFileInput(file: FileList) {
@@ -90,6 +118,9 @@ export class EditComponent implements OnInit, OnDestroy {
     //Se verifican los campos de la imagen 
     if(this.pelicula.portada != this.urlUploadB64)
         this.pelicula.portada = this.urlUploadB64;
+    
+    if(this.pelicula.portada == "../assets/img/upload.png")
+        this.pelicula.portada = null;
     
     if(this.fileImage != null){ 
       //Se valida si el usuario escogio una portada con el peso indicado y si es diferente a la almacenada en la base de datos
